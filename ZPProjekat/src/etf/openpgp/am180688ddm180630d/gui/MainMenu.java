@@ -2,6 +2,8 @@ package etf.openpgp.am180688ddm180630d.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Panel;
@@ -10,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.*; 
 
 
 public class MainMenu extends Frame {
@@ -21,7 +24,7 @@ public class MainMenu extends Frame {
 	Button prstenovi_kljuceva = new Button("Prstenovi kljuceva");
 	Button posalji_poruku = new Button("Posalji poruku");
 	Button primi_poruku = new Button("Primi poruku");
-	
+	Dialog upk;
 	
 	public MainMenu() {
 		
@@ -44,19 +47,30 @@ public class MainMenu extends Frame {
 				
 			}
 		});
-		
+		upk = new Dialog(this,"Upravljanje postojecim kljucevima", true);
 		dodajOsluskivace();
 
 	}
 	
-	private void dodajOsluskivace() {
+	protected void dodajOsluskivace() {
 		
-		upravljanje_postojecim_kljucevima.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// ovde metoda koju poziva
-			}
-		});
+		
+		upravljanje_postojecim_kljucevima.addActionListener ( new ActionListener()  {  
+            public void actionPerformed( ActionEvent e )  {  
+            	System.out.println("AAAAAAA");
+				upk.setVisible(true);
+				upk.setLayout(new FlowLayout()); 
+				upk.setSize(300,300);
+				Button nazad = new Button("Nazad");
+				upk.add(nazad);
+				
+				 nazad.addActionListener ( new ActionListener()  {  
+					 public void actionPerformed( ActionEvent e ) {  
+			                upk.setVisible(false);  
+			            }  
+			        });  
+            }  
+        });  
 		
 		uvoz_izvoz_kljuceva.addMouseListener(new MouseAdapter() {
 			@Override
