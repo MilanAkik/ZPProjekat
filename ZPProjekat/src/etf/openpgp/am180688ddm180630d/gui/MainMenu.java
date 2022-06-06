@@ -25,6 +25,10 @@ public class MainMenu extends Frame {
 	Button posalji_poruku = new Button("Posalji poruku");
 	Button primi_poruku = new Button("Primi poruku");
 	Dialog upk;
+	Dialog uik;
+	Dialog pk;
+	Dialog posalji;
+	Dialog primi;
 	
 	public MainMenu() {
 		
@@ -47,57 +51,117 @@ public class MainMenu extends Frame {
 				
 			}
 		});
-		upk = new Dialog(this,"Upravljanje postojecim kljucevima", true);
+
+
+		dodajDialoge();
+		 
 		dodajOsluskivace();
+		
+	}
+
+	protected void dodajDialoge() {
+		upk = new Dialog(this,"Upravljanje postojecim kljucevima", true);
+		upk.setLayout(new FlowLayout()); 
+		upk.setSize(500,300);
+		Button nazad = new Button("Nazad");
+		upk.add(nazad);
+		
+		 nazad.addActionListener ( new ActionListener()  {  
+			 public void actionPerformed( ActionEvent e ) {  
+	                upk.setVisible(false);  
+	            }  
+	        });  
+		 
+			uik = new Dialog(this,"Uvoz/Izvoz kljuceva", true);
+			uik.setLayout(new FlowLayout()); 
+			uik.setSize(500,300);
+			Button nazad2 = new Button("Nazad");
+			uik.add(nazad2);
+			
+			 nazad2.addActionListener ( new ActionListener()  {  
+				 public void actionPerformed( ActionEvent e ) {  
+		                uik.setVisible(false);  
+		            }  
+		        });  
+			 
+			 
+				pk = new Dialog(this,"Prsten kljuceva", true);
+				pk.setLayout(new FlowLayout()); 
+				pk.setSize(500,300);
+				Button nazad3 = new Button("Nazad");
+				pk.add(nazad3);
+				
+				 nazad3.addActionListener ( new ActionListener()  {  
+					 public void actionPerformed( ActionEvent e ) {  
+			                pk.setVisible(false);  
+			            }  
+			    });  
+
+			
+				posalji = new Dialog(this,"Posalji poruku", true);
+				posalji.setLayout(new FlowLayout()); 
+				posalji.setSize(500,300);
+				Button nazad4 = new Button("Nazad");
+				posalji.add(nazad4);
+					
+				 nazad4.addActionListener ( new ActionListener()  {  
+					 public void actionPerformed( ActionEvent e ) {  
+				               posalji.setVisible(false);  
+				           }  
+				 });
+				 
+				 primi = new Dialog(this,"Primi poruku", true);
+				 primi.setLayout(new FlowLayout()); 
+				 primi.setSize(500,300);
+				 Button nazad5 = new Button("Nazad");
+				 primi.add(nazad5);
+						
+					 nazad5.addActionListener ( new ActionListener()  {  
+						 public void actionPerformed( ActionEvent e ) {  
+					               primi.setVisible(false);  
+					           }  
+					 });  
 
 	}
-	
 	protected void dodajOsluskivace() {
 		
 		
 		upravljanje_postojecim_kljucevima.addActionListener ( new ActionListener()  {  
             public void actionPerformed( ActionEvent e )  {  
-            	System.out.println("AAAAAAA");
+
 				upk.setVisible(true);
-				upk.setLayout(new FlowLayout()); 
-				upk.setSize(300,300);
-				Button nazad = new Button("Nazad");
-				upk.add(nazad);
-				
-				 nazad.addActionListener ( new ActionListener()  {  
-					 public void actionPerformed( ActionEvent e ) {  
-			                upk.setVisible(false);  
-			            }  
-			        });  
-            }  
+		    }  
         });  
 		
-		uvoz_izvoz_kljuceva.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// ovde metoda koju poziva
-			}
-		});
+		uvoz_izvoz_kljuceva.addActionListener ( new ActionListener()  {  
+            public void actionPerformed( ActionEvent e )  {  
+
+				uik.setVisible(true);
+		    }  
+        });  
+
 		
-		prstenovi_kljuceva.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// ovde metoda koju poziva
-			}
-		});
+		prstenovi_kljuceva.addActionListener ( new ActionListener()  {  
+            public void actionPerformed( ActionEvent e )  {  
+
+				pk.setVisible(true);
+		    }  
+        });  
+
 		
-		posalji_poruku.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// ovde metoda koju poziva
-			}
-		});
+		posalji_poruku.addActionListener ( new ActionListener()  {  
+            public void actionPerformed( ActionEvent e )  {  
+
+				posalji.setVisible(true);
+		    }  
+        });  
+
 		
-		primi_poruku.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// ovde metoda koju poziva
-			}
-		});
+		primi_poruku.addActionListener ( new ActionListener()  {  
+            public void actionPerformed( ActionEvent e )  {  
+
+				primi.setVisible(true);
+		    }  
+        });  
 	}
 }
