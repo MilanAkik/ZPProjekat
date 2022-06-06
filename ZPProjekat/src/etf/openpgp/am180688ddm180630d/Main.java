@@ -20,11 +20,23 @@ import etf.openpgp.am180688ddm180630d.gui.MainMenu;
 import etf.openpgp.am180688ddm180630d.util.ASCReader;
 import etf.openpgp.am180688ddm180630d.util.CRCUtil;
 import etf.openpgp.am180688ddm180630d.util.Radix64Util;
+import javax.swing.*;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception
 	{
+		
+//		JFrame f=new JFrame();
+//        
+//		JButton b=new JButton("click");  
+//		b.setBounds(130,100,100, 40);
+//		          
+//		f.add(b);  
+//		          
+//		f.setSize(400,500);  
+//		f.setLayout(null);  
+//		f.setVisible(true);  
 //		ASCReader asc = new ASCReader();
 //		
 //		if(asc.readASCFile("C:\\Users\\Milan\\Desktop\\Milan_0xB327AE61_public.asc"))
