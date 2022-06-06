@@ -3,6 +3,7 @@ package etf.openpgp.am180688ddm180630d.gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Checkbox;
+import java.awt.Choice;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -46,6 +47,8 @@ public class MainMenu extends Frame {
 	TextField pass2 = new TextField();
 	Panel generisanje_i_brisanje2 = new Panel(new GridLayout(2,2,4,2));
 	Button obrisi = new Button("Obrisi");
+	Choice padajuca_lista = new Choice();
+	
 	
 	public MainMenu() {
 		
@@ -99,9 +102,10 @@ public class MainMenu extends Frame {
 		pomocni.add(generisanje_i_brisanje, BorderLayout.CENTER);
 		pomocni.add(generisi, BorderLayout.SOUTH);
 		
+		
 		Panel pomocni2 = new Panel(new BorderLayout());
 		generisanje_i_brisanje2.add(key);
-		generisanje_i_brisanje2.add(checkbox1);
+		generisanje_i_brisanje2.add(padajuca_lista);
 		generisanje_i_brisanje2.add(password2);
 		generisanje_i_brisanje2.add(pass2);
 		pomocni2.add(generisanje_i_brisanje2, BorderLayout.CENTER);
