@@ -25,18 +25,18 @@ public class Main {
 
 	public static void main(String[] args) throws Exception
 	{
-		ASCReader asc = new ASCReader();
-		
-		if(asc.readASCFile("C:\\Users\\Milan\\Desktop\\Milan_0xB327AE61_public.asc"))
-		{
-			System.out.println(asc.getBlock());
-			System.out.println(asc.getHash());
-			System.out.println(asc.getType().getType());
-		}
-		else
-		{
-			System.out.println("INCORRECT KEY FILE");
-		}
+//		ASCReader asc = new ASCReader();
+//		
+//		if(asc.readASCFile("C:\\Users\\Milan\\Desktop\\Milan_0xB327AE61_public.asc"))
+//		{
+//			System.out.println(asc.getBlock());
+//			System.out.println(asc.getHash());
+//			System.out.println(asc.getType().getType());
+//		}
+//		else
+//		{
+//			System.out.println("INCORRECT KEY FILE");
+//		}
 
 		
 //		System.out.println(a);
@@ -72,7 +72,7 @@ public class Main {
 //		 long checksum = 0xee97e4;
 //		 System.out.println(crc_octets(data));
 //		 System.out.println(checksum);
-//		MainMenu m = new MainMenu();
+		MainMenu m = new MainMenu();
 	}
 	
 	

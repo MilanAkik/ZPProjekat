@@ -21,9 +21,11 @@ public class ASCReader {
 		}
 	}
 	
-	private static String block;
-	private static String hash;
-	private static KeyType type;
+	private String block;
+	private byte[] blockBytes;
+	private String hash;
+	private byte[] hashBytes;
+	private KeyType type;
 	
 	public ASCReader()
 	{
@@ -32,7 +34,7 @@ public class ASCReader {
 		this.type=KeyType.UNDEFINED;
 	}
 	
-	public static boolean readASCFile(String path) {
+	public boolean readASCFile(String path) {
 		try {
 			File f = new File(path);
 			Scanner s = new Scanner(f);
@@ -57,22 +59,30 @@ public class ASCReader {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
-		byte[] octets = Radix64Util.decode(block);
-		byte[] h = Radix64Util.decode(hash);
-		long a = CRCUtil.crc_octets(octets);
-		long b = (h[0]&0xFF)<<16|(h[1]&0xFF)<<8|(h[2]&0xFF);
+		blockBytes = Radix64Util.decode(block);
+		hashBytes = Radix64Util.decode(hash);
+		long a = CRCUtil.crc_octets(blockBytes);
+		long b = (hashBytes[0]&0xFF)<<16|(hashBytes[1]&0xFF)<<8|(hashBytes[2]&0xFF);
 		return a==b;
 	}
 
-	public static String getBlock() {
+	public byte[] getBlockBytes() {
+		return blockBytes;
+	}
+
+	public byte[] getHashBytes() {
+		return hashBytes;
+	}
+
+	public String getBlock() {
 		return block;
 	}
 
-	public static String getHash() {
+	public String getHash() {
 		return hash;
 	}
 
-	public static KeyType getType() {
+	public KeyType getType() {
 		return type;
 	}
 	
