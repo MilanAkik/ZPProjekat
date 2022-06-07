@@ -16,7 +16,6 @@ public class UserIDPacket extends Packet{
 		{
 			arr[headerLength+i] = (byte) userid.charAt(i);
 		}
-		System.out.println(Packet.bytesToHex(arr));
 		return arr;
 	}
 

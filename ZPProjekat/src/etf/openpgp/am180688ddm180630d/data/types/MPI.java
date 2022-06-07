@@ -21,4 +21,10 @@ public class MPI {
 			bytes[i+2]=b[i];
 		}
 	}
+	
+	public byte[] toByteArray()
+	{
+		return bytes;
+	}
+	
 }

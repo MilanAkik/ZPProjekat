@@ -15,6 +15,7 @@ import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator;
 import org.bouncycastle.util.encoders.Base64;
+import org.bouncycastle.util.encoders.Base64Encoder;
 
 import etf.openpgp.am180688ddm180630d.data.packet.Packet;
 import etf.openpgp.am180688ddm180630d.data.packet.PacketTag;
@@ -95,7 +96,11 @@ public class Main {
 //		Packet p = new Packet(true, PacketTag.LITERAL_DATA, false, 30);
 //		p.toByteArray();
 //		UserIDPacket u = new UserIDPacket(true, "milan <milan@example.com>");
-//		System.out.println(CRCUtil.crc_octets(u.toByteArray()));
+//		byte[] p = u.toByteArray();
+//		System.out.println(Radix64Util.encode(p));
+//		int crc = (int) CRCUtil.crc_octets(p);
+//		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
+//		System.out.println("="+Radix64Util.encode(c));
 //		MainMenu m = new MainMenu();
 	}
 	
