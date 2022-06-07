@@ -84,6 +84,8 @@ public class Main {
 //		 long checksum = 0xee97e4;
 //		 System.out.println(crc_octets(data));
 //		 System.out.println(checksum);
+//		byte[] b = {(byte) 0xAC, 0x00};
+//		System.out.println(CRCUtil.crc_octets(b));
 		MainMenu m = new MainMenu();
 	}
 	
