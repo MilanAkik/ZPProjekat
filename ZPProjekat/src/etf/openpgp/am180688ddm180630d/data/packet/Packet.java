@@ -5,6 +5,7 @@ public class Packet {
 	protected PacketTag tag;
 	protected boolean determinateLength;
 	protected int length;
+	protected int headerLength;
 	
 	/*public Packet(boolean isNew, byte tag, boolean determinateLength, int length)
 	{
@@ -54,29 +55,33 @@ public class Packet {
 			t |= tag.getValue()&0x3F;
 			if(!determinateLength)
 			{
-				arr = new byte[2];
+				arr = new byte[2+(1<<length)];
 				arr[1]=(byte) (length&0xFF);
+				headerLength = 2;
 			}
 			else if(length<192)
 			{
-				arr = new byte[2];
+				arr = new byte[2+length];
 				arr[1]=(byte) (length&0xFF);
+				headerLength = 2;
 			}
 			else if(length<8384)
 			{
-				arr = new byte[3];
+				arr = new byte[3+length];
 				int len = length-192;
 				arr[1] = (byte) ((len>>8)+192);
 				arr[2] = (byte) (len&0xFF);
+				headerLength = 3;
 			}
 			else
 			{
-				arr = new byte[6];
+				arr = new byte[6+length];
 				arr[1]=(byte) 255;
 				arr[2]=(byte) (length>>24);
 				arr[3]=(byte) ((length>>16)&0xFF);
 				arr[4]=(byte) ((length>>8)&0xFF);
 				arr[5]=(byte) (length&0xFF);
+				headerLength = 6;
 			}
 		}
 		else
@@ -91,24 +96,27 @@ public class Packet {
 			}
 			else if(length<256)
 			{
-				arr = new byte[2];
+				arr = new byte[2+length];
 				arr[1] = (byte) (length&0xFF);
+				headerLength = 2;
 			}
 			else if(length<65536)
 			{
-				arr = new byte[3];
+				arr = new byte[3+length];
 				arr[1] = (byte) (length>>8);
 				arr[2] = (byte) (length&0xFF);
 				t |= 0x01;
+				headerLength = 3;
 			}
 			else
 			{
-				arr = new byte[5];
+				arr = new byte[5+length];
 				arr[1]=(byte) (length>>24);
 				arr[2]=(byte) ((length>>16)&0xFF);
 				arr[3]=(byte) ((length>>8)&0xFF);
 				arr[4]=(byte) (length&0xFF);
 				t |= 0x02;
+				headerLength = 5;
 			}
 		}
 		arr[0]=t;

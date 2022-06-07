@@ -18,6 +18,7 @@ import org.bouncycastle.util.encoders.Base64;
 
 import etf.openpgp.am180688ddm180630d.data.packet.Packet;
 import etf.openpgp.am180688ddm180630d.data.packet.PacketTag;
+import etf.openpgp.am180688ddm180630d.data.packet.UserIDPacket;
 import etf.openpgp.am180688ddm180630d.gui.MainMenu;
 import etf.openpgp.am180688ddm180630d.util.ASCReader;
 import etf.openpgp.am180688ddm180630d.util.CRCUtil;
@@ -93,7 +94,9 @@ public class Main {
 //		System.out.println(CRCUtil.crc_octets(b));
 //		Packet p = new Packet(true, PacketTag.LITERAL_DATA, false, 30);
 //		p.toByteArray();
-		MainMenu m = new MainMenu();
+//		UserIDPacket u = new UserIDPacket(true, "milan <milan@example.com>");
+//		System.out.println(CRCUtil.crc_octets(u.toByteArray()));
+//		MainMenu m = new MainMenu();
 	}
 	
 	
