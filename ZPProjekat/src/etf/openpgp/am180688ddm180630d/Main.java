@@ -16,6 +16,8 @@ import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator;
 import org.bouncycastle.util.encoders.Base64;
 
+import etf.openpgp.am180688ddm180630d.data.packet.Packet;
+import etf.openpgp.am180688ddm180630d.data.packet.PacketTag;
 import etf.openpgp.am180688ddm180630d.gui.MainMenu;
 import etf.openpgp.am180688ddm180630d.util.ASCReader;
 import etf.openpgp.am180688ddm180630d.util.CRCUtil;
@@ -84,8 +86,13 @@ public class Main {
 //		 long checksum = 0xee97e4;
 //		 System.out.println(crc_octets(data));
 //		 System.out.println(checksum);
-//		byte[] b = {(byte) 0xAC, 0x00};
+//		byte[] b = new byte[202];
+//		b[0]=(byte) 0xCB;
+//		b[1]=(byte) 0xC0;
+//		b[2]=0x08;
 //		System.out.println(CRCUtil.crc_octets(b));
+//		Packet p = new Packet(true, PacketTag.LITERAL_DATA, false, 30);
+//		p.toByteArray();
 		MainMenu m = new MainMenu();
 	}
 	
