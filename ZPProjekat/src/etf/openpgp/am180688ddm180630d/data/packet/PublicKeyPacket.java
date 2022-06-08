@@ -31,7 +31,6 @@ public class PublicKeyPacket extends Packet {
 		byte[] arr = super.toByteArray();
 		int i=headerLength;
 		arr[i++]=(byte) (version&0xFF);
-		System.out.println(version);
 		int uts = (int) ldt.atZone(ZoneId.systemDefault()).toEpochSecond();
 		arr[i++] = (byte) ((uts >> 24)&0xFF);
 		arr[i++] = (byte) ((uts >> 16)&0xFF);
