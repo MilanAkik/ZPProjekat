@@ -1,5 +1,8 @@
 package etf.openpgp.am180688ddm180630d.data;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.Security;
 import java.time.LocalDateTime;
@@ -132,6 +135,44 @@ public class PublicKey {
 	public String getUserID()
 	{
 		return uid.getUserid();
+	}
+	
+	public String toByteArray()
+	{
+		byte[] pkba = pk.toByteArray();
+		byte[] uiba = uid.toByteArray();
+		byte[] ucba = uidc.toByteArray();
+		byte[] out = new byte[pkba.length+uiba.length+ucba.length];
+		for(int i=0; i<pkba.length; i++) out[i]=pkba[i];
+		for(int i=0; i<uiba.length; i++) out[pkba.length+i]=uiba[i];
+		for(int i=0; i<ucba.length; i++) out[pkba.length+uiba.length+i]=ucba[i];
+		String data = Radix64Util.encode(out);
+		StringBuilder sb = new StringBuilder();
+		sb.append("-----BEGIN PGP PUBLIC KEY BLOCK-----\r\n\r\n");
+		for(int i=0; i<data.length(); i+=76)
+		{
+			int end = (data.length()<i+76)?data.length():i+76;
+			sb.append(data.substring(i,end));
+			sb.append("\r\n");
+		}
+		int crc = (int) CRCUtil.crc_octets(out);
+		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
+		sb.append("="+Radix64Util.encode(c));
+		sb.append("\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n");
+		return sb.toString();
+	}
+	
+	public void writeToFile(String path) {
+
+		String output = this.toByteArray();
+		try {
+			FileWriter myWriter = new FileWriter(path);
+			myWriter.write(output);
+			myWriter.flush();
+			myWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

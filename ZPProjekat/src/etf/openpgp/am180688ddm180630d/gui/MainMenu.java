@@ -196,6 +196,19 @@ public class MainMenu extends Frame {
 			grid_za_uik.add(nista);
 			grid_za_uik.add(nista);
 			grid_za_uik.add(nista);
+			izvezi.addActionListener ( new ActionListener()  {  
+				 public void actionPerformed( ActionEvent e ) {  
+		                String path = polje_za_putanju.getText();
+		                String name = padajuca_lista_za_uik.getSelectedItem();
+		                for(PublicKey pk: PublicKeyRing.ring)
+		                {
+		                	if(pk.getUserID().equals(name))
+		                	{
+		                		pk.writeToFile(path);
+		                	}
+		                }
+	            }  
+	         });  
 //			glavni_za_uik.add(grid_za_uik, BorderLayout.CENTER);
 			
 		
@@ -269,6 +282,11 @@ public class MainMenu extends Frame {
 		uvoz_izvoz_kljuceva.addActionListener ( new ActionListener()  {  
             public void actionPerformed( ActionEvent e )  {  
 
+				padajuca_lista_za_uik.removeAll();
+        		for(PublicKey pk2: PublicKeyRing.ring)
+        		{
+        			padajuca_lista_za_uik.add(pk2.getUserID());
+        		}
 				uik.setVisible(true);
 		    }  
         });  
