@@ -17,7 +17,7 @@ import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.*; 
-
+import javax.swing.*;   
 
 public class MainMenu extends Frame {
 	
@@ -48,6 +48,19 @@ public class MainMenu extends Frame {
 	Panel generisanje_i_brisanje2 = new Panel(new GridLayout(2,2,4,2));
 	Button obrisi = new Button("Obrisi");
 	Choice padajuca_lista = new Choice();
+	Label putanja = new Label("Putanja");
+	Label kljuc = new Label("Kljuc");
+	TextField polje_za_putanju = new TextField();
+	Choice padajuca_lista_za_uik = new Choice();
+	Button uvezi = new Button("Uvezi");
+	Button izvezi = new Button("Izvezi");
+
+/*	
+	JFrame f=new JFrame();    
+    String data[][]={{"vreme","id","pk","epk","userid"}};    
+    String column[]={"Timestamp","KeyID","Public Key", "Encrypted Private Key", "User ID"};         
+*/   
+    
 	
 	
 	public MainMenu() {
@@ -120,12 +133,31 @@ public class MainMenu extends Frame {
 	                upk.setVisible(false);  
 	            }  
 	        });  
-		 
+
+// gui za uvoz izvoz
+			Label nista = new Label();
+//			Panel glavni_za_uik = new Panel(new BorderLayout());
+			Panel grid_za_uik = new Panel(new GridLayout(3,3,5,50));
+	//		grid_za_uik.setSize(100,100);
+			
+			grid_za_uik.add(putanja);
+			grid_za_uik.add(polje_za_putanju);
+			grid_za_uik.add(uvezi);
+			grid_za_uik.add(kljuc);
+			grid_za_uik.add(padajuca_lista_za_uik);
+			grid_za_uik.add(izvezi);
+			grid_za_uik.add(nista);
+			grid_za_uik.add(nista);
+			grid_za_uik.add(nista);
+//			glavni_za_uik.add(grid_za_uik, BorderLayout.CENTER);
+			
+		
 			uik = new Dialog(this,"Uvoz/Izvoz kljuceva", true);
-			uik.setLayout(new FlowLayout()); 
+			uik.setLayout(new BorderLayout()); 
 			uik.setSize(500,300);
 			Button nazad2 = new Button("Nazad");
-			uik.add(nazad2);
+			uik.add(grid_za_uik, BorderLayout.CENTER);
+			uik.add(nazad2, BorderLayout.SOUTH);
 			
 			 nazad2.addActionListener ( new ActionListener()  {  
 				 public void actionPerformed( ActionEvent e ) {  
@@ -133,11 +165,28 @@ public class MainMenu extends Frame {
 	            }  
   	         });  
 			 
-			 
+			 Panel glavni_za_pk = new Panel(new BorderLayout());
+			 Panel grid_za_pk = new Panel(new GridLayout(2,1));
+			 	
+			 String data[][]={ {"101","Amit","670000"},    
+                     {"102","Jai","780000"},    
+                     {"101","Sachin","700000"}};    
+			 String column[]={"ID","NAME","SALARY"};         
+			 JTable jt=new JTable(data,column);    
+			 jt.setBounds(30,40,200,300);          
+			 JScrollPane sp=new JScrollPane(jt);    
+			// f.add(sp);          
+			 	
 				pk = new Dialog(this,"Prsten kljuceva", true);
-				pk.setLayout(new FlowLayout()); 
+				pk.setLayout(new BorderLayout()); 
 				pk.setSize(500,300);
 				Button nazad3 = new Button("Nazad");
+		//		grid_za_pk.add(jt);
+		//		grid_za_pk.add(jt);
+		//		glavni_za_pk.add(grid_za_pk);
+		//		pk.add(glavni_za_pk, BorderLayout.CENTER);
+		//		pk.add(nazad3,BorderLayout.SOUTH);
+				pk.add(jt);
 				pk.add(nazad3);
 				
 				 nazad3.addActionListener ( new ActionListener()  {  

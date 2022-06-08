@@ -101,7 +101,7 @@ public class Main {
 //		int crc = (int) CRCUtil.crc_octets(p);
 //		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
 //		System.out.println("="+Radix64Util.encode(c));
-//		MainMenu m = new MainMenu();
+		MainMenu m = new MainMenu();
 	}
 	
 	
