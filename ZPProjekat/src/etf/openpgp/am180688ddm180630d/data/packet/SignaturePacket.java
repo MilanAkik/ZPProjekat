@@ -42,6 +42,12 @@ public class SignaturePacket extends Packet {
 		this.unhashedLength = unhashedLength;
 		this.unhashed = unhashed;
 	}
+	
+	//-------------------------------TODO--------------------------------------
+	public int getBodyLength()
+	{
+		return 1;
+	}
 
 	//POTREBNO
 	//
