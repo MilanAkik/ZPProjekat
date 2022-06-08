@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
+import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
 import etf.openpgp.am180688ddm180630d.data.types.MPI;
 
 public class PublicKeyPacket extends Packet {

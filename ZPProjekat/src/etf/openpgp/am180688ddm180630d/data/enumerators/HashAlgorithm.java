@@ -1,4 +1,4 @@
-package etf.openpgp.am180688ddm180630d.data.packet;
+package etf.openpgp.am180688ddm180630d.data.enumerators;
 
 public enum HashAlgorithm {
 	MD5(1),

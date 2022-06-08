@@ -3,6 +3,11 @@ package etf.openpgp.am180688ddm180630d.data.packet;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.HashAlgorithm;
+import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
+import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
+import etf.openpgp.am180688ddm180630d.data.enumerators.SignatureType;
+import etf.openpgp.am180688ddm180630d.data.subpacket.SignatureSubpacket;
 import etf.openpgp.am180688ddm180630d.data.types.MPI;
 
 public class SignaturePacket extends Packet {

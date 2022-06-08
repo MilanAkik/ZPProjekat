@@ -1,5 +1,7 @@
 package etf.openpgp.am180688ddm180630d.data.packet;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
+
 public class UserIDPacket extends Packet{
 
 	String userid;

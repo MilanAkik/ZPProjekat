@@ -1,4 +1,6 @@
-package etf.openpgp.am180688ddm180630d.data.packet;
+package etf.openpgp.am180688ddm180630d.data.subpacket;
+
+import etf.openpgp.am180688ddm180630d.data.enumerators.SignatureSubpacketType;
 
 public class SignatureSubpacket {
 	protected int length;

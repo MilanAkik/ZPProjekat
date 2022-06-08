@@ -18,9 +18,9 @@ import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Base64Encoder;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
+import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
 import etf.openpgp.am180688ddm180630d.data.packet.Packet;
-import etf.openpgp.am180688ddm180630d.data.packet.PacketTag;
-import etf.openpgp.am180688ddm180630d.data.packet.PublicKeyAlgorithm;
 import etf.openpgp.am180688ddm180630d.data.packet.PublicKeyPacket;
 import etf.openpgp.am180688ddm180630d.data.packet.UserIDPacket;
 import etf.openpgp.am180688ddm180630d.data.types.MPI;
