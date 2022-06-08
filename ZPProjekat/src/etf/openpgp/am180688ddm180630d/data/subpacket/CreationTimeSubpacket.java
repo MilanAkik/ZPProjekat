@@ -9,7 +9,7 @@ public class CreationTimeSubpacket extends SignatureSubpacket {
 
 	protected LocalDateTime ldt;
 	public CreationTimeSubpacket(int length, SignatureSubpacketType type, LocalDateTime ldt) {
-		super(4, SignatureSubpacketType.SIGNATURE_CREATION_TIME);
+		super(5, SignatureSubpacketType.SIGNATURE_CREATION_TIME);
 		this.ldt=ldt;
 	}
 	
