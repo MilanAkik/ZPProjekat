@@ -16,14 +16,14 @@ public class SignatureSubpacket {
 		byte[] arr;
 		if(length<192)
 		{
-			arr=new byte[2+length];
+			arr=new byte[1+length];
 			arr[0]=(byte) (length&0xFF);
 			arr[1]=(byte) type.getValue();
 			headerLength = 2;
 		}
 		else if(length<8384)
 		{
-			arr=new byte[3+length];
+			arr=new byte[2+length];
 			int len = length-192;
 			arr[0] = (byte) ((len>>8)+192);
 			arr[1] = (byte) (len&0xFF);
@@ -32,7 +32,7 @@ public class SignatureSubpacket {
 		}
 		else
 		{
-			arr=new byte[6+length];
+			arr=new byte[5+length];
 			arr[0]=(byte) 255;
 			arr[1]=(byte) (length>>24);
 			arr[2]=(byte) ((length>>16)&0xFF);
