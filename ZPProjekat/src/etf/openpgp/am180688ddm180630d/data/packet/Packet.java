@@ -47,6 +47,14 @@ public class Packet {
 		this.length = length;
 	}
 	
+	public int getLength() {
+		return length;
+	}
+	
+	public int getHeaderLength() {
+		return headerLength;
+	}
+	
 	public byte[] toByteArray()
 	{
 		byte[] arr;

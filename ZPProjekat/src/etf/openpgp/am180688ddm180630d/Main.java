@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Base64Encoder;
 
+import etf.openpgp.am180688ddm180630d.data.PublicKey;
+import etf.openpgp.am180688ddm180630d.data.PublicKeyRing;
 import etf.openpgp.am180688ddm180630d.data.enumerators.HashAlgorithm;
 import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
 import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
@@ -98,27 +101,32 @@ public class Main {
 //		System.out.println(CRCUtil.crc_octets(b));
 //		Packet p = new Packet(true, PacketTag.LITERAL_DATA, false, 30);
 //		p.toByteArray();
-//		RSAUtil.generateKey(2048);
-//		MPI[] m= {RSAUtil.getN(),RSAUtil.getE()};
-//		MPI[] m2= {new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01})};
-//		List<SignatureSubpacket> ssp = new LinkedList<SignatureSubpacket>();
-//		List<SignatureSubpacket> ssp2 = new LinkedList<SignatureSubpacket>();
-//		PublicKeyPacket pkp = new PublicKeyPacket(true,4,LocalDateTime.now(), 120, PublicKeyAlgorithm.RSA_S, m);
-//		byte[] k = pkp.toByteArray();
-//		UserIDPacket u = new UserIDPacket(true, "andjela <andjela@example.com>");
-//		byte[] p = u.toByteArray();
-//		SignaturePacket sp = new SignaturePacket(true, (byte)4, SignatureType.POSITIVE_USERID, PublicKeyAlgorithm.RSA_ES,
-//				HashAlgorithm.SHA1, (short)0, m2, LocalDateTime.now(), (long)0, (short)0, ssp, (short)0, ssp2);
-//		byte[] spb = sp.toByteArray();
-//		byte[] file = new byte[k.length+p.length+spb.length];
-//		for(int i=0; i<k.length; i++) file[i]=k[i];
-//		for(int i=0; i<p.length; i++) file[i+k.length]=p[i];
-//		for(int i=0; i<spb.length; i++) file[i+k.length+p.length]=spb[i];
-//		System.out.println(Radix64Util.encode(file));
-//		int crc = (int) CRCUtil.crc_octets(file);
-//		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
-//		System.out.println("="+Radix64Util.encode(c));
-		MainMenu m = new MainMenu();
+		PublicKeyRing.init();
+		RSAUtil.generateKey(2048);
+		MPI[] m= {RSAUtil.getN(),RSAUtil.getE()};
+		MPI[] m2= {new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01})};
+		List<SignatureSubpacket> ssp = new LinkedList<SignatureSubpacket>();
+		List<SignatureSubpacket> ssp2 = new LinkedList<SignatureSubpacket>();
+		PublicKeyPacket pkp = new PublicKeyPacket(true,4,LocalDateTime.now(), 120, PublicKeyAlgorithm.RSA_S, m);
+		byte[] k = pkp.toByteArray();
+		UserIDPacket u = new UserIDPacket(true, "andjela <andjela@example.com>");
+		byte[] p = u.toByteArray();
+		SignaturePacket sp = new SignaturePacket(true, (byte)4, SignatureType.POSITIVE_USERID, PublicKeyAlgorithm.RSA_ES,
+				HashAlgorithm.SHA1, (short)0, m2, LocalDateTime.now(), (long)0, (short)0, ssp, (short)0, ssp2);
+		byte[] spb = sp.toByteArray();
+		byte[] file = new byte[k.length+p.length+spb.length];
+		for(int i=0; i<k.length; i++) file[i]=k[i];
+		for(int i=0; i<p.length; i++) file[i+k.length]=p[i];
+		for(int i=0; i<spb.length; i++) file[i+k.length+p.length]=spb[i];
+		System.out.println(Radix64Util.encode(file));
+		int crc = (int) CRCUtil.crc_octets(file);
+		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
+		System.out.println("="+Radix64Util.encode(c));
+		PublicKey pk = new PublicKey(pkp, null, u, sp);
+		PublicKeyRing.add(pk);
+		for(String s: pk.getTableRow())
+			System.out.println(s);
+		MainMenu m1 = new MainMenu();
 	}
 	
 	

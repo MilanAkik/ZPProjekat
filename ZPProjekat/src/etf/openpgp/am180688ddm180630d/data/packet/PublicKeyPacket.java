@@ -12,10 +12,10 @@ public class PublicKeyPacket extends Packet {
 
 	protected int version;
 	protected LocalDateTime ldt;
-	int duration;
-	PublicKeyAlgorithm pka;
-	MPI[] data;
-	
+	protected int duration;
+	protected PublicKeyAlgorithm pka;
+	protected MPI[] data;
+
 	public PublicKeyPacket(boolean isNew, int version, LocalDateTime ldt, int duration, PublicKeyAlgorithm pka, MPI[] data ) {
 		super(isNew, PacketTag.PUBLIC_KEY, true, (version==3)?8:6);
 		this.version=version;
@@ -50,6 +50,26 @@ public class PublicKeyPacket extends Packet {
 			}
 		}
 		return arr;
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public LocalDateTime getLdt() {
+		return ldt;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public PublicKeyAlgorithm getPka() {
+		return pka;
+	}
+
+	public MPI[] getData() {
+		return data;
 	}
 
 }

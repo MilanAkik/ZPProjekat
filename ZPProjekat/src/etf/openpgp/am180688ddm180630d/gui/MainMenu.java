@@ -17,7 +17,10 @@ import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.*; 
-import javax.swing.*;   
+import javax.swing.*;
+
+import etf.openpgp.am180688ddm180630d.data.PublicKey;
+import etf.openpgp.am180688ddm180630d.data.PublicKeyRing;   
 
 public class MainMenu extends Frame {
 	
@@ -236,7 +239,17 @@ public class MainMenu extends Frame {
 		
 		prstenovi_kljuceva.addActionListener ( new ActionListener()  {  
             public void actionPerformed( ActionEvent e )  {  
-            	
+            	data_za_javni_kljuc = new String[ PublicKeyRing.ring.size()][8];
+            	int j = 0;
+            	for(PublicKey pubkey: PublicKeyRing.ring)
+            	{
+            		String[] pkdata = pubkey.getTableRow();
+            		for(int i=0; i<8; i++)
+            		{
+            			data_za_javni_kljuc[j][i]=pkdata[i];
+            		}
+            		j++;
+            	}
             	jt_privatni=new JTable(data_za_privatni_kljuc,zaglavlje_za_privatni_kljuc);    
 //       		 jt_privatni.setBounds(30, 30, 400, 150);          
        		 JScrollPane sp=new JScrollPane(jt_privatni);   

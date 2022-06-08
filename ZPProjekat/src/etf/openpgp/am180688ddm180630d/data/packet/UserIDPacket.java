@@ -20,5 +20,9 @@ public class UserIDPacket extends Packet{
 		}
 		return arr;
 	}
+	
+	public String getUserid() {
+		return userid;
+	}
 
 }
