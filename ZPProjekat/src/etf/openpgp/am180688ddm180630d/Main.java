@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.RSAPublicKeyStructure;
@@ -33,6 +34,7 @@ import etf.openpgp.am180688ddm180630d.data.types.MPI;
 import etf.openpgp.am180688ddm180630d.gui.MainMenu;
 import etf.openpgp.am180688ddm180630d.util.ASCReader;
 import etf.openpgp.am180688ddm180630d.util.CRCUtil;
+import etf.openpgp.am180688ddm180630d.util.RSAUtil;
 import etf.openpgp.am180688ddm180630d.util.Radix64Util;
 import javax.swing.*;
 
@@ -67,15 +69,6 @@ public class Main {
 		
 //		System.out.println(a);
 //		System.out.println(b);
-//		SecureRandom sr = new SecureRandom();
-//		BigInteger e = BigInteger.valueOf(65537);
-//		RSAKeyGenerationParameters rkgp = new RSAKeyGenerationParameters(e, sr, 1024, PrimeCertaintyCalculator.getDefaultCertainty(1024));
-//		RSAKeyPairGenerator rkpg = new RSAKeyPairGenerator();
-//		rkpg.init(rkgp);
-//		AsymmetricCipherKeyPair ackp = rkpg.generateKeyPair();
-//		RSAKeyParameters rkp = (RSAKeyParameters) ackp.getPublic();
-//		System.out.println(rkp.getExponent());
-//		System.out.println(rkp.getModulus());
 //		RSAPublicKeyStructure struct = new RSAPublicKeyStructure(rkp.getModulus(), 
 //				rkp.getExponent());
 //
@@ -105,18 +98,14 @@ public class Main {
 //		System.out.println(CRCUtil.crc_octets(b));
 //		Packet p = new Packet(true, PacketTag.LITERAL_DATA, false, 30);
 //		p.toByteArray();
-//		MPI[] m= new MPI[2];
-//		MPI n = new MPI(new byte[]{0x11,(byte) 0xDD,(byte) 0xFF});
-//		MPI e = new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01});
-//		m[0]=n;
-//		m[1]=e;
-//		MPI m_to_d_mod_n = new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01});
-//		MPI[] m2= {m_to_d_mod_n};
+//		RSAUtil.generateKey(2048);
+//		MPI[] m= {RSAUtil.getN(),RSAUtil.getE()};
+//		MPI[] m2= {new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01})};
 //		List<SignatureSubpacket> ssp = new LinkedList<SignatureSubpacket>();
 //		List<SignatureSubpacket> ssp2 = new LinkedList<SignatureSubpacket>();
 //		PublicKeyPacket pkp = new PublicKeyPacket(true,4,LocalDateTime.now(), 120, PublicKeyAlgorithm.RSA_S, m);
 //		byte[] k = pkp.toByteArray();
-//		UserIDPacket u = new UserIDPacket(true, "milan <milan@example.com>");
+//		UserIDPacket u = new UserIDPacket(true, "andjela <andjela@example.com>");
 //		byte[] p = u.toByteArray();
 //		SignaturePacket sp = new SignaturePacket(true, (byte)4, SignatureType.POSITIVE_USERID, PublicKeyAlgorithm.RSA_ES,
 //				HashAlgorithm.SHA1, (short)0, m2, LocalDateTime.now(), (long)0, (short)0, ssp, (short)0, ssp2);
