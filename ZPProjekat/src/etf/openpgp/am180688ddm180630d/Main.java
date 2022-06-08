@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -18,11 +20,15 @@ import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Base64Encoder;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.HashAlgorithm;
 import etf.openpgp.am180688ddm180630d.data.enumerators.PacketTag;
 import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
+import etf.openpgp.am180688ddm180630d.data.enumerators.SignatureType;
 import etf.openpgp.am180688ddm180630d.data.packet.Packet;
 import etf.openpgp.am180688ddm180630d.data.packet.PublicKeyPacket;
+import etf.openpgp.am180688ddm180630d.data.packet.SignaturePacket;
 import etf.openpgp.am180688ddm180630d.data.packet.UserIDPacket;
+import etf.openpgp.am180688ddm180630d.data.subpacket.SignatureSubpacket;
 import etf.openpgp.am180688ddm180630d.data.types.MPI;
 import etf.openpgp.am180688ddm180630d.gui.MainMenu;
 import etf.openpgp.am180688ddm180630d.util.ASCReader;
@@ -104,13 +110,21 @@ public class Main {
 //		MPI e = new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01});
 //		m[0]=n;
 //		m[1]=e;
+//		MPI m_to_d_mod_n = new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01});
+//		MPI[] m2= {m_to_d_mod_n};
+//		List<SignatureSubpacket> ssp = new LinkedList<SignatureSubpacket>();
+//		List<SignatureSubpacket> ssp2 = new LinkedList<SignatureSubpacket>();
 //		PublicKeyPacket pkp = new PublicKeyPacket(true,4,LocalDateTime.now(), 120, PublicKeyAlgorithm.RSA_S, m);
 //		byte[] k = pkp.toByteArray();
 //		UserIDPacket u = new UserIDPacket(true, "milan <milan@example.com>");
 //		byte[] p = u.toByteArray();
-//		byte[] file = new byte[k.length+p.length];
+//		SignaturePacket sp = new SignaturePacket(true, (byte)4, SignatureType.POSITIVE_USERID, PublicKeyAlgorithm.RSA_ES,
+//				HashAlgorithm.SHA1, (short)0, m2, LocalDateTime.now(), (long)0, (short)0, ssp, (short)0, ssp2);
+//		byte[] spb = sp.toByteArray();
+//		byte[] file = new byte[k.length+p.length+spb.length];
 //		for(int i=0; i<k.length; i++) file[i]=k[i];
 //		for(int i=0; i<p.length; i++) file[i+k.length]=p[i];
+//		for(int i=0; i<spb.length; i++) file[i+k.length+p.length]=spb[i];
 //		System.out.println(Radix64Util.encode(file));
 //		int crc = (int) CRCUtil.crc_octets(file);
 //		byte[] c = {(byte) ((crc>>16)&0xFF), (byte) ((crc>>8)&0xFF), (byte) (crc&0xFF)};
