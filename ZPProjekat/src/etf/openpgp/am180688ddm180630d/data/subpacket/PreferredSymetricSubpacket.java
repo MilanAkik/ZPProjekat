@@ -8,6 +8,7 @@ public class PreferredSymetricSubpacket extends SignatureSubpacket {
 	protected PublicKeyAlgorithm[] preferred;
 	public PreferredSymetricSubpacket(PublicKeyAlgorithm[] preferred) {
 		super(preferred.length+1, SignatureSubpacketType.PREFERRED_SYMMETRIC_ALGORITHMS);
+		this.preferred=preferred;
 	}
 	
 	@Override
