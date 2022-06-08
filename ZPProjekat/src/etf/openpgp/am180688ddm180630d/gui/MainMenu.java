@@ -113,7 +113,30 @@ public class MainMenu extends Frame {
 		generisanje_i_brisanje.add(user);
 		generisanje_i_brisanje.add(email);
 		generisanje_i_brisanje.add(e_mail);
-		
+		generisi.addActionListener ( new ActionListener()  {  
+			 public void actionPerformed( ActionEvent e ) {  
+	                String uname = user.getText();
+	                String email = e_mail.getText();
+	                String pword = pass.getText();
+	                if(checkbox1.getState())
+	                {
+	                	PublicKey pk = new PublicKey(1024, uname, email, pword);
+	                }
+	                else if (checkbox2.getState())
+	                {
+	                	PublicKey pk = new PublicKey(2048, uname, email, pword);
+	                }
+	                else 
+	                {
+	                	PublicKey pk = new PublicKey(4096, uname, email, pword);
+	                }
+	                padajuca_lista.removeAll();
+	        		for(PublicKey pk: PublicKeyRing.ring)
+	        		{
+	        			padajuca_lista.add(pk.getUserID());
+	        		}
+	            }  
+	        });  
 		panel_za_checkbox.add(checkbox1);
 		panel_za_checkbox.add(checkbox2);
 		panel_za_checkbox.add(checkbox3);
@@ -133,6 +156,20 @@ public class MainMenu extends Frame {
 		generisanje_i_brisanje2.add(pass2);
 		pomocni2.add(generisanje_i_brisanje2, BorderLayout.CENTER);
 		pomocni2.add(obrisi, BorderLayout.SOUTH);
+		
+		obrisi.addActionListener ( new ActionListener()  {  
+			 public void actionPerformed( ActionEvent e ) {  
+	                PublicKey pk = null;
+	                String vrednost = padajuca_lista.getSelectedItem();
+	                String pword = pass2.getText();
+	                PublicKeyRing.remove(vrednost, pword);
+	                padajuca_lista.removeAll();
+	        		for(PublicKey pk2: PublicKeyRing.ring)
+	        		{
+	        			padajuca_lista.add(pk2.getUserID());
+	        		}
+	            }  
+	        });
 		
 		glavni.add(pomocni);
 		glavni.add(pomocni2);
@@ -188,7 +225,7 @@ public class MainMenu extends Frame {
 
 				 nazad3.addActionListener ( new ActionListener()  {  
 					 public void actionPerformed( ActionEvent e ) {  
-			                f.setVisible(false);  
+			                f.setVisible(false);
 			                f.dispose();
 		            }  
 			    });  
@@ -252,7 +289,8 @@ public class MainMenu extends Frame {
             	}
             	jt_privatni=new JTable(data_za_privatni_kljuc,zaglavlje_za_privatni_kljuc);    
 //       		 jt_privatni.setBounds(30, 30, 400, 150);          
-       		 JScrollPane sp=new JScrollPane(jt_privatni);   
+       		 JScrollPane sp=new JScrollPane(jt_privatni);
+       		 Jpanel.removeAll();
        		 Jpanel.add(sp);
        		 jt_javni = new JTable(data_za_javni_kljuc, zaglavlje_za_javni_kljuc);
        		 JScrollPane sp2=new JScrollPane(jt_javni);

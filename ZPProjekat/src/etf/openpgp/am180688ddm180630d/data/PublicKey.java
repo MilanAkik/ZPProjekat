@@ -3,15 +3,25 @@ package etf.openpgp.am180688ddm180630d.data;
 import java.security.MessageDigest;
 import java.security.Security;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.jcajce.provider.digest.SHA1;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import etf.openpgp.am180688ddm180630d.data.enumerators.HashAlgorithm;
+import etf.openpgp.am180688ddm180630d.data.enumerators.PublicKeyAlgorithm;
+import etf.openpgp.am180688ddm180630d.data.enumerators.SignatureType;
 import etf.openpgp.am180688ddm180630d.data.packet.PublicKeyPacket;
 import etf.openpgp.am180688ddm180630d.data.packet.SignaturePacket;
 import etf.openpgp.am180688ddm180630d.data.packet.UserIDPacket;
+import etf.openpgp.am180688ddm180630d.data.subpacket.SignatureSubpacket;
 import etf.openpgp.am180688ddm180630d.data.types.MPI;
+import etf.openpgp.am180688ddm180630d.util.CRCUtil;
+import etf.openpgp.am180688ddm180630d.util.RSAUtil;
+import etf.openpgp.am180688ddm180630d.util.Radix64Util;
 
 public class PublicKey {
 //	private enum TrustFlag{YES,MAYBE,NO};
@@ -36,12 +46,25 @@ public class PublicKey {
 		this.uidc = uidc;
 	}
 	
-	public PublicKey(int width)
+	public PublicKey(int width, String name, String email, String password)
 	{
-		this.pk = null;
 		this.rs = null;
-		this.uid = null;
-		this.uidc = null;
+		RSAUtil.generateKey(2048);
+		MPI[] m= {RSAUtil.getN(),RSAUtil.getE()};
+		MPI[] m2= {new MPI(new byte[]{0x01,(byte) 0x00,(byte) 0x01})};
+		List<SignatureSubpacket> ssp = new LinkedList<SignatureSubpacket>();
+		List<SignatureSubpacket> ssp2 = new LinkedList<SignatureSubpacket>();
+		PublicKeyPacket pkp = new PublicKeyPacket(true,4,LocalDateTime.now(), 120, PublicKeyAlgorithm.RSA_S, m);
+		byte[] k = pkp.toByteArray();
+		UserIDPacket u = new UserIDPacket(true, name+" <"+email+">");
+		byte[] p = u.toByteArray();
+		SignaturePacket sp = new SignaturePacket(true, (byte)4, SignatureType.POSITIVE_USERID, PublicKeyAlgorithm.RSA_ES,
+				HashAlgorithm.SHA1, (short)0, m2, LocalDateTime.now(), (long)0, (short)0, ssp, (short)0, ssp2);
+		byte[] spb = sp.toByteArray();
+		this.pk = pkp;
+		this.uid = u;
+		this.uidc = sp;
+		PublicKeyRing.add(this, password);
 	}
 	
 	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
@@ -94,13 +117,21 @@ public class PublicKey {
 		for(int i=0; i<ear.length; i++) ear[i]=ea[i+2];
 		
 		res[2]="("+bytesToHex(ear)+","+bytesToHex(mar)+")";
-		res[3]="";
+		res[3]="1";
 		res[4]=uid.getUserid();
 		res[5]="";
-		res[6]="";
-		res[7]="";
+		Random r = new Random();
+		byte[] sign = new byte[20];
+		r.nextBytes(sign);
+		res[6]=bytesToHex(sign);
+		res[7]="1";
 		return res;
 		
+	}
+	
+	public String getUserID()
+	{
+		return uid.getUserid();
 	}
 	
 }
