@@ -11,6 +11,10 @@ public class SignatureSubpacket {
 		this.length=length;
 		this.type=type;
 	}
+	
+	public int getLength() {
+		return length;
+	}
 
 	public byte[] toByteArray() {
 		byte[] arr;

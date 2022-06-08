@@ -1,6 +1,7 @@
 package etf.openpgp.am180688ddm180630d.data.packet;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import etf.openpgp.am180688ddm180630d.data.enumerators.HashAlgorithm;
@@ -25,10 +26,10 @@ public class SignaturePacket extends Packet {
 	private short unhashedLength;
 	private List<SignatureSubpacket> unhashed;
 	
-	public SignaturePacket(boolean isNew, int length, byte version, SignatureType type, PublicKeyAlgorithm pka,
+	public SignaturePacket(boolean isNew, byte version, SignatureType type, PublicKeyAlgorithm pka,
 			HashAlgorithm ha, short l16oshv, MPI[] m, LocalDateTime ldt, long keyID, short hashedLength,
 			List<SignatureSubpacket> hashed, short unhashedLength, List<SignatureSubpacket> unhashed) {
-		super(isNew, PacketTag.SIGNATURE, true, length);
+		super(isNew, PacketTag.SIGNATURE, true, 0);
 		this.version = version;
 		this.type = type;
 		this.pka = pka;
@@ -41,6 +42,30 @@ public class SignaturePacket extends Packet {
 		this.hashed = hashed;
 		this.unhashedLength = unhashedLength;
 		this.unhashed = unhashed;
+		if(version==3)
+		{
+			length = 19;
+			for(MPI mpi: m)
+			{
+				length+=mpi.toByteArray().length;
+			}
+		}
+		else if(version==4)
+		{
+			length = 10;
+			for(MPI mpi: m)
+			{
+				length+=mpi.toByteArray().length;
+			}
+			for(SignatureSubpacket sp: hashed)
+			{
+				length+=sp.getLength();
+			}
+			for(SignatureSubpacket sp: unhashed)
+			{
+				length+=sp.getLength();
+			}
+		}
 	}
 	
 	//-------------------------------TODO--------------------------------------
@@ -67,9 +92,6 @@ public class SignaturePacket extends Packet {
 	//0+ UNHASHES SUBPACKETS
 	//
 	//
-	//
-	//
-	//
 	//V3
 	//
 	//1 VERSION	
@@ -81,6 +103,8 @@ public class SignaturePacket extends Packet {
 	//1 HASH ALGORITHM
 	//2 LEFT 16 BITS OF SIGNED HASH VALUE
 	//1+ MPI
+	//
+	//
 	//
 	//V4
 	//
@@ -95,9 +119,79 @@ public class SignaturePacket extends Packet {
 	//2 LEFT 16 BITS OF SIGNED HASH VALUE
 	//1+ MPI
 	//
+	//
 	
 	@Override
 	public byte[] toByteArray() {
-		return super.toByteArray();
+		byte[] arr = super.toByteArray();
+		int i=headerLength;
+		if(version == 4)
+		{
+			int uts = (int) ldt.atZone(ZoneId.systemDefault()).toEpochSecond();
+			arr[i++] = version;
+			arr[i++] = (byte) type.getValue();
+			arr[i++] = (byte) pka.getValue();
+			arr[i++] = (byte) ha.getValue();
+			arr[i++] = (byte) ((hashedLength >> 8)&0xFF);
+			arr[i++] = (byte) (hashedLength&0xFF);
+			for(SignatureSubpacket s: hashed)
+			{
+				byte[] h = s.toByteArray();
+				for(byte b : h)
+				{
+					arr[i++]=b;
+				}
+			}
+			arr[i++] = (byte) ((unhashedLength >> 8)&0xFF);
+			arr[i++] = (byte) (unhashedLength&0xFF);
+			for(SignatureSubpacket s: unhashed)
+			{
+				byte[] h = s.toByteArray();
+				for(byte b : h)
+				{
+					arr[i++]=b;
+				}
+			}
+			arr[i++] = (byte) ((l16oshv >> 8)&0xFF);
+			arr[i++] = (byte) (l16oshv&0xFF);
+			for(MPI mpi: m)
+			{
+				for(byte b: mpi.toByteArray())
+				{
+					arr[i++]=b;
+				}
+			}
+		}
+		else if(version == 3)
+		{
+			int uts = (int) ldt.atZone(ZoneId.systemDefault()).toEpochSecond();
+			arr[i++] = version;
+			arr[i++] = 0x05;
+			arr[i++] = (byte) type.getValue();
+			arr[i++] = (byte) ((uts >> 24)&0xFF);
+			arr[i++] = (byte) ((uts >> 16)&0xFF);
+			arr[i++] = (byte) ((uts >> 8)&0xFF);
+			arr[i++] = (byte) (uts&0xFF);
+			arr[i++] = (byte) ((keyID >> 56)&0xFF);
+			arr[i++] = (byte) ((keyID >> 48)&0xFF);
+			arr[i++] = (byte) ((keyID >> 40)&0xFF);
+			arr[i++] = (byte) ((keyID >> 32)&0xFF);
+			arr[i++] = (byte) ((keyID >> 24)&0xFF);
+			arr[i++] = (byte) ((keyID >> 16)&0xFF);
+			arr[i++] = (byte) ((keyID >> 8)&0xFF);
+			arr[i++] = (byte) (keyID&0xFF);
+			arr[i++] = (byte) pka.getValue();
+			arr[i++] = (byte) ha.getValue();
+			arr[i++] = (byte) ((l16oshv >> 8)&0xFF);
+			arr[i++] = (byte) (l16oshv&0xFF);
+			for(MPI mpi: m)
+			{
+				for(byte b: mpi.toByteArray())
+				{
+					arr[i++]=b;
+				}
+			}
+		}
+		return arr;
 	}
 }
