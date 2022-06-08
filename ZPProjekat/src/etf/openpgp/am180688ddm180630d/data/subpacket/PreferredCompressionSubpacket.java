@@ -8,6 +8,7 @@ public class PreferredCompressionSubpacket extends SignatureSubpacket {
 	protected CompressionAlgorithm[] ca; 
 	public PreferredCompressionSubpacket(CompressionAlgorithm[] ca) {
 		super(ca.length+1, SignatureSubpacketType.PREFERRED_COMPRESSION_ALGORITHMS);
+		this.ca=ca;
 	}
 	
 	@Override
