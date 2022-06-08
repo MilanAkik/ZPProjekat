@@ -52,15 +52,20 @@ public class MainMenu extends Frame {
 	Label kljuc = new Label("Kljuc");
 	TextField polje_za_putanju = new TextField();
 	Choice padajuca_lista_za_uik = new Choice();
-	Button uvezi = new Button("Uvezi");
+	Button uvezi = new Button("Uvezi"); Button nazad3 = new Button("Nazad");
 	Button izvezi = new Button("Izvezi");
-
-/*	
+	 JPanel Jpanel = new JPanel(new GridLayout(2,1));
+	 JPanel Jpanel2 = new JPanel(new BorderLayout()); 
+	
 	JFrame f=new JFrame();    
-    String data[][]={{"vreme","id","pk","epk","userid"}};    
-    String column[]={"Timestamp","KeyID","Public Key", "Encrypted Private Key", "User ID"};         
-*/   
+    String data_za_privatni_kljuc[][]={}; 
     
+    
+    String zaglavlje_za_privatni_kljuc[]={"Timestamp","KeyID","Public Key", "Encrypted Private Key", "User ID"};       
+    JTable jt_privatni;
+    String data_za_javni_kljuc[][]={};    
+    String zaglavlje_za_javni_kljuc[]={"Timestamp","KeyID","Public Key","Owner Trust", "User ID", "Key Legitimacy","Signatures","Signature Trust"}; 
+    JTable jt_javni;
 	
 	
 	public MainMenu() {
@@ -85,8 +90,10 @@ public class MainMenu extends Frame {
 			}
 		});
 
-
-		dodajDialoge();
+		 
+		
+		
+		 dodajDialoge();
 		 
 		dodajOsluskivace();
 		
@@ -164,34 +171,22 @@ public class MainMenu extends Frame {
 		                uik.setVisible(false);  
 	            }  
   	         });  
+/////////////////////////// Gui za prsten kljuca
 			 
 			 Panel glavni_za_pk = new Panel(new BorderLayout());
 			 Panel grid_za_pk = new Panel(new GridLayout(2,1));
 			 	
-			 String data[][]={ {"101","Amit","670000"},    
-                     {"102","Jai","780000"},    
-                     {"101","Sachin","700000"}};    
-			 String column[]={"ID","NAME","SALARY"};         
-			 JTable jt=new JTable(data,column);    
-			 jt.setBounds(30,40,200,300);          
-			 JScrollPane sp=new JScrollPane(jt);    
-			// f.add(sp);          
+	//		     data_za_privatni_kljuc[0][0]= "nesto";      
 			 	
-				pk = new Dialog(this,"Prsten kljuceva", true);
-				pk.setLayout(new BorderLayout()); 
-				pk.setSize(500,300);
-				Button nazad3 = new Button("Nazad");
-		//		grid_za_pk.add(jt);
-		//		grid_za_pk.add(jt);
-		//		glavni_za_pk.add(grid_za_pk);
-		//		pk.add(glavni_za_pk, BorderLayout.CENTER);
-		//		pk.add(nazad3,BorderLayout.SOUTH);
-				pk.add(jt);
-				pk.add(nazad3);
+	//			pk = new Dialog(this,"Prsten kljuceva", true);
+	//			pk.setLayout(new BorderLayout()); 
+				f.setSize(900,400);
 				
+
 				 nazad3.addActionListener ( new ActionListener()  {  
 					 public void actionPerformed( ActionEvent e ) {  
-			                pk.setVisible(false);  
+			                f.setVisible(false);  
+			                f.dispose();
 		            }  
 			    });  
 
@@ -241,8 +236,19 @@ public class MainMenu extends Frame {
 		
 		prstenovi_kljuceva.addActionListener ( new ActionListener()  {  
             public void actionPerformed( ActionEvent e )  {  
+            	
+            	jt_privatni=new JTable(data_za_privatni_kljuc,zaglavlje_za_privatni_kljuc);    
+//       		 jt_privatni.setBounds(30, 30, 400, 150);          
+       		 JScrollPane sp=new JScrollPane(jt_privatni);   
+       		 Jpanel.add(sp);
+       		 jt_javni = new JTable(data_za_javni_kljuc, zaglavlje_za_javni_kljuc);
+       		 JScrollPane sp2=new JScrollPane(jt_javni);
+       		 Jpanel.add(sp2);
+       		 f.add(Jpanel, BorderLayout.CENTER);
+       		 f.add(nazad3, BorderLayout.SOUTH);
+       		 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-				pk.setVisible(true);
+				f.setVisible(true);
 		    }  
         });  
 
